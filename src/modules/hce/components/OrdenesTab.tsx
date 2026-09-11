@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
+import { useDemoSession } from '@/app/DemoSessionProvider'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {
@@ -26,8 +27,15 @@ export function OrdenesTab({
   onCreateMedication,
   onCreateLab,
 }: OrdenesTabProps) {
+  const navigate = useNavigate()
+  const { setRole } = useDemoSession()
   const [creating, setCreating] = useState<'med' | 'lab' | null>(null)
   const hasRx = encounter.orders.some((order) => order.id === 'rx-001')
+
+  const handleGoToPharmacy = () => {
+    setRole('Farmacia')
+    navigate('/app/farmacia/ordenes')
+  }
 
   const handleMedication = async () => {
     setCreating('med')
@@ -106,8 +114,8 @@ export function OrdenesTab({
 
       {hasRx ? (
         <div className="flex justify-end">
-          <Button type="button" variant="outline" asChild>
-            <Link to="/app/farmacia/ordenes">Ir a Farmacia</Link>
+          <Button type="button" variant="outline" onClick={handleGoToPharmacy}>
+            Ir a Farmacia
           </Button>
         </div>
       ) : null}
