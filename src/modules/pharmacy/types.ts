@@ -1,1 +1,6 @@
-export type { Medication, Dispense } from '@/data/types'
+export type {
+  Dispense,
+  DispenseStatus,
+  DispenseWithDetails,
+  Medication,
+} from '@/data/types'

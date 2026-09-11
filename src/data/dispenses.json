@@ -1,0 +1,11 @@
+[
+  {
+    "id": "rx-001",
+    "medicationId": "med-001",
+    "patientId": "pat-001",
+    "encounterId": "enc-001",
+    "quantity": 20,
+    "status": "pending",
+    "createdAt": "2026-09-11T10:00:00-05:00"
+  }
+]

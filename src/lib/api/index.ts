@@ -14,3 +14,9 @@ export {
   type AddEncounterNoteInput,
   type CreateEncounterOrderInput,
 } from '@/lib/api/encounters'
+export {
+  fulfillDispense,
+  getDispenses,
+  getMedications,
+  type GetDispensesParams,
+} from '@/lib/api/pharmacy'

@@ -99,12 +99,22 @@ export interface Medication {
   strength: string
 }
 
+export type DispenseStatus = 'pending' | 'delivered'
+
 export interface Dispense {
   id: string
   medicationId: string
   patientId: string
+  encounterId: string
   quantity: number
-  dispensedAt: string
+  status: DispenseStatus
+  createdAt: string
+  dispensedAt?: string
+}
+
+export interface DispenseWithDetails extends Dispense {
+  medication: Medication
+  patient: Patient
 }
 
 export interface InvoiceLine {
