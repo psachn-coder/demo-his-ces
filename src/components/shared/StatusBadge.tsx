@@ -2,9 +2,12 @@ import { Badge } from '@/components/ui/badge'
 import type { AppointmentStatus } from '@/data/types'
 import { cn } from '@/lib/utils'
 
-const STATUS_VARIANT: Record<AppointmentStatus, 'default' | 'secondary' | 'outline' | 'muted'> = {
+const STATUS_VARIANT: Record<
+  AppointmentStatus,
+  'default' | 'secondary' | 'outline' | 'muted' | 'success'
+> = {
   Programada: 'outline',
-  Confirmada: 'default',
+  Confirmada: 'success',
   'En espera': 'secondary',
   'En consulta': 'secondary',
   Atendida: 'muted',
