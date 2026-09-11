@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-ces-primary: var(--ces-primary);
+  --color-ces-secondary: var(--ces-secondary);
+  --color-ces-bg: var(--ces-bg);
+  --color-ces-surface: var(--ces-surface);
+  --color-ces-text: var(--ces-text);
+  --color-ces-muted: var(--ces-muted);
+
+  --color-background: var(--ces-bg);
+  --color-foreground: var(--ces-text);
+  --color-card: var(--ces-surface);
+  --color-card-foreground: var(--ces-text);
+  --color-primary: var(--ces-primary);
+  --color-primary-foreground: #ffffff;
+  --color-secondary: var(--ces-secondary);
+  --color-secondary-foreground: #ffffff;
+  --color-muted: #e8eef2;
+  --color-muted-foreground: var(--ces-muted);
+  --color-accent: #e8f4f8;
+  --color-accent-foreground: var(--ces-text);
+  --color-border: #d4dee6;
+  --color-input: #d4dee6;
+  --color-ring: var(--ces-primary);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+}
+
+:root {
+  --ces-primary: #0b5f8a;
+  --ces-secondary: #1a8a8c;
+  --ces-bg: #f7fafc;
+  --ces-surface: #ffffff;
+  --ces-text: #1a2b3c;
+  --ces-muted: #5a6f7e;
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  background-color: var(--ces-bg);
+  color: var(--ces-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ces-primary);
+  outline-offset: 2px;
+}
