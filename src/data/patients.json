@@ -3,17 +3,22 @@
     "id": "pat-001",
     "firstName": "María Fernanda",
     "lastName": "Quishpe",
-    "documentId": "1723456789",
-    "birthDate": "1988-03-15",
+    "documentId": "1712345678",
+    "birthDate": "1992-03-15",
+    "age": 34,
+    "sector": "Quitumbe",
+    "allergy": "AINE",
     "phone": "+593 99 123 4567",
     "email": "maria.quishpe@example.com"
   },
   {
     "id": "pat-002",
-    "firstName": "Carlos Andrés",
-    "lastName": "Mendoza",
+    "firstName": "Carlos Eduardo",
+    "lastName": "Molina",
     "documentId": "0912345678",
-    "birthDate": "1975-11-22",
+    "birthDate": "1972-11-22",
+    "age": 54,
+    "sector": "Guamaní",
     "phone": "+593 98 765 4321"
   },
   {
