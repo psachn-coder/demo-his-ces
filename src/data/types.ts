@@ -36,6 +36,52 @@ export interface Encounter {
   appointmentId?: string
   startedAt: string
   status: 'Abierto' | 'Cerrado'
+  motivo: string
+}
+
+export interface SoapNote {
+  subjective: string
+  objective: string
+  assessment: string
+  plan: string
+  recordedAt: string
+}
+
+export interface VitalSigns {
+  recordedAt: string
+  bloodPressure: string
+  heartRate: number
+  temperature: number
+  respiratoryRate: number
+  oxygenSaturation: number
+  weightKg?: number
+  heightCm?: number
+}
+
+export type EncounterOrderType = 'Medicamento' | 'Laboratorio'
+export type EncounterOrderStatus = 'Pendiente' | 'Dispensada' | 'Completada'
+
+export interface EncounterOrder {
+  id: string
+  encounterId: string
+  type: EncounterOrderType
+  description: string
+  status: EncounterOrderStatus
+  createdAt: string
+  medicationName?: string
+  medicationDose?: string
+  quantity?: number
+}
+
+export interface EncounterDetail extends Encounter {
+  vitals: VitalSigns[]
+  notes: SoapNote[]
+  orders: EncounterOrder[]
+  diagnosisCode?: string
+}
+
+export interface EncounterWithPatient extends EncounterDetail {
+  patient: Patient
 }
 
 export interface Bed {
