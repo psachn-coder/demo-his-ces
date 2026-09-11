@@ -1,3 +1,6 @@
+import { useNavigate } from 'react-router-dom'
+
+import { useDemoSession } from '@/app/DemoSessionProvider'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -28,6 +31,15 @@ interface DispenseDetailProps {
 }
 
 export function DispenseDetail({ dispense, loading, fulfilling, onFulfill }: DispenseDetailProps) {
+  const navigate = useNavigate()
+  const { setRole } = useDemoSession()
+
+  const handleGoToBilling = () => {
+    if (!dispense) return
+    setRole('Caja')
+    navigate(`/app/caja/cobro/${dispense.encounterId}`)
+  }
+
   if (loading) {
     return (
       <div className="space-y-4 rounded-lg border border-border bg-ces-surface p-6">
@@ -83,7 +95,7 @@ export function DispenseDetail({ dispense, loading, fulfilling, onFulfill }: Dis
           <p className="text-sm text-ces-text">Consulta ambulatoria</p>
         </section>
 
-        <div className="flex justify-end border-t border-border pt-4">
+        <div className="flex flex-wrap justify-end gap-2 border-t border-border pt-4">
           <Button
             type="button"
             onClick={onFulfill}
@@ -91,6 +103,11 @@ export function DispenseDetail({ dispense, loading, fulfilling, onFulfill }: Dis
           >
             {isDelivered ? 'Entregado' : fulfilling ? 'Entregando…' : 'Entregar'}
           </Button>
+          {isDelivered ? (
+            <Button type="button" variant="outline" onClick={handleGoToBilling}>
+              Ir a Caja
+            </Button>
+          ) : null}
         </div>
       </div>
     </div>
