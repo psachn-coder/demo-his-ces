@@ -1,7 +1,20 @@
 import { Link, useLocation } from 'react-router-dom'
 
+interface BreadcrumbCrumb {
+  path: string
+  label: string
+  isLast: boolean
+}
+
+const ROUTE_BREADCRUMBS: Record<string, BreadcrumbCrumb[]> = {
+  '/app/recepcion/agenda': [
+    { path: '/app', label: 'App', isLast: false },
+    { path: '/app/recepcion/agenda', label: 'Agenda', isLast: true },
+  ],
+}
+
 const SEGMENT_LABELS: Record<string, string> = {
-  app: 'Inicio',
+  app: 'App',
   recepcion: 'Recepción',
   agenda: 'Agenda',
   ingreso: 'Ingreso',
@@ -22,19 +35,25 @@ function labelForSegment(segment: string): string {
   return SEGMENT_LABELS[segment] ?? segment
 }
 
-export function Breadcrumb() {
-  const { pathname } = useLocation()
+function crumbsFromPath(pathname: string): BreadcrumbCrumb[] {
+  if (ROUTE_BREADCRUMBS[pathname]) {
+    return ROUTE_BREADCRUMBS[pathname]
+  }
+
   const segments = pathname.split('/').filter(Boolean)
-
-  if (segments.length === 0) return null
-
-  const crumbs = segments.map((segment, index) => {
+  return segments.map((segment, index) => {
     const path = '/' + segments.slice(0, index + 1).join('/')
     const isLast = index === segments.length - 1
     const label = labelForSegment(segment)
-
     return { path, label, isLast }
   })
+}
+
+export function Breadcrumb() {
+  const { pathname } = useLocation()
+  const crumbs = crumbsFromPath(pathname)
+
+  if (crumbs.length === 0) return null
 
   return (
     <nav aria-label="Ruta de navegación" className="mb-4 text-sm text-ces-muted">
