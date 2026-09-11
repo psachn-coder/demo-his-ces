@@ -1,0 +1,52 @@
+[
+  {
+    "id": "201-A",
+    "ward": "Medicina",
+    "number": "201-A",
+    "status": "Libre"
+  },
+  {
+    "id": "202-A",
+    "ward": "Medicina",
+    "number": "202-A",
+    "status": "Ocupada",
+    "patientId": "pat-001"
+  },
+  {
+    "id": "203-A",
+    "ward": "Medicina",
+    "number": "203-A",
+    "status": "Limpieza"
+  },
+  {
+    "id": "204-B",
+    "ward": "Medicina",
+    "number": "204-B",
+    "status": "Libre"
+  },
+  {
+    "id": "205-A",
+    "ward": "Medicina",
+    "number": "205-A",
+    "status": "Libre"
+  },
+  {
+    "id": "301-A",
+    "ward": "Cirugía",
+    "number": "301-A",
+    "status": "Ocupada",
+    "patientId": "pat-003"
+  },
+  {
+    "id": "302-A",
+    "ward": "Cirugía",
+    "number": "302-A",
+    "status": "Limpieza"
+  },
+  {
+    "id": "303-B",
+    "ward": "Cirugía",
+    "number": "303-B",
+    "status": "Libre"
+  }
+]
