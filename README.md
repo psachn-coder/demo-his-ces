@@ -83,6 +83,7 @@ UI helpers use `es-EC`: dates `dd/MM/yyyy`, 24-hour time, currency `USD` with 2 
 2. The Vite `base` is `/demo-his-ces/` when `GITHUB_PAGES=true` (see `vite.config.ts`).
 3. Build for Pages: `npm run build:pages`
 4. Preview locally with Pages base: `npm run preview:pages`
+5. Deep links (e.g. `/app/recepcion/agenda`) rely on `404.html` → `index.html`: the deploy workflow copies `dist/index.html` to `dist/404.html` so GitHub Pages serves the SPA shell for unknown paths.
 
 Published URL: `https://psachn-coder.github.io/demo-his-ces/`
 
