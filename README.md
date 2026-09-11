@@ -84,7 +84,7 @@ UI helpers use `es-EC`: dates `dd/MM/yyyy`, 24-hour time, currency `USD` with 2 
 3. Build for Pages: `npm run build:pages`
 4. Preview locally with Pages base: `npm run preview:pages`
 
-Published URL: `https://<user>.github.io/demo-his-ces/`
+Published URL: `https://psachn-coder.github.io/demo-his-ces/`
 
 ## Branching
 
