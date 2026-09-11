@@ -21,6 +21,14 @@ const ROUTE_BREADCRUMBS: Record<string, BreadcrumbCrumb[]> = {
     { path: '/app', label: 'App', isLast: false },
     { path: '/app/recepcion/agenda', label: 'Agenda', isLast: true },
   ],
+  '/app/recepcion/ingreso': [
+    { path: '/app', label: 'App', isLast: false },
+    { path: '/app/recepcion/ingreso', label: 'Ingreso', isLast: true },
+  ],
+  '/app/enfermeria/camas': [
+    { path: '/app', label: 'App', isLast: false },
+    { path: '/app/enfermeria/camas', label: 'Camas', isLast: true },
+  ],
   '/app/farmacia/ordenes': [
     { path: '/app', label: 'App', isLast: false },
     { path: '/app/farmacia/ordenes', label: 'Órdenes', isLast: true },
