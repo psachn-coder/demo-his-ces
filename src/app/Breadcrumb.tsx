@@ -16,6 +16,21 @@ const COBRO_BREADCRUMBS: BreadcrumbCrumb[] = [
   { path: '/app/caja/cobro', label: 'Cobro', isLast: true },
 ]
 
+const EVOLUCION_BREADCRUMBS: BreadcrumbCrumb[] = [
+  { path: '/app', label: 'App', isLast: false },
+  { path: '/app/medico/evolucion', label: 'Evolución', isLast: true },
+]
+
+const ALTA_BREADCRUMBS: BreadcrumbCrumb[] = [
+  { path: '/app', label: 'App', isLast: false },
+  { path: '/app/alta', label: 'Alta', isLast: true },
+]
+
+const FACTURA_BREADCRUMBS: BreadcrumbCrumb[] = [
+  { path: '/app', label: 'App', isLast: false },
+  { path: '/app/caja/factura', label: 'Factura', isLast: true },
+]
+
 const ROUTE_BREADCRUMBS: Record<string, BreadcrumbCrumb[]> = {
   '/app/recepcion/agenda': [
     { path: '/app', label: 'App', isLast: false },
@@ -69,6 +84,23 @@ function crumbsFromPath(pathname: string): BreadcrumbCrumb[] {
 
   if (normalized === '/app/caja/cobro' || /^\/app\/caja\/cobro\/[^/]+$/.test(normalized)) {
     return COBRO_BREADCRUMBS
+  }
+
+  if (
+    normalized === '/app/medico/evolucion' ||
+    /^\/app\/medico\/evolucion\/[^/]+$/.test(normalized) ||
+    normalized === '/app/enfermeria/evolucion' ||
+    /^\/app\/enfermeria\/evolucion\/[^/]+$/.test(normalized)
+  ) {
+    return EVOLUCION_BREADCRUMBS
+  }
+
+  if (normalized === '/app/alta' || /^\/app\/alta\/[^/]+$/.test(normalized)) {
+    return ALTA_BREADCRUMBS
+  }
+
+  if (normalized === '/app/caja/factura' || /^\/app\/caja\/factura\/[^/]+$/.test(normalized)) {
+    return FACTURA_BREADCRUMBS
   }
 
   const segments = pathname.split('/').filter(Boolean)

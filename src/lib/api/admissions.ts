@@ -1,5 +1,7 @@
 import bedsSeed from '@/data/beds.json'
 import type {
+  AdmissionNote,
+  AdmissionNoteAuthorRole,
   AdmissionRecord,
   Bed,
   BedStatus,
@@ -9,7 +11,13 @@ import type {
 import { getPatientById } from '@/lib/api/patients'
 import { fail, ok, type ApiResult } from '@/lib/api/types'
 import { guayaquilIsoNow } from '@/lib/dates'
-import { DEMO_ADMISSION_ID } from '@/lib/ids'
+import { DEMO_ADMISSION_ID, generateId } from '@/lib/ids'
+import {
+  DEMO_INGRESO_BED_ID,
+  DEMO_INGRESO_PATIENT_ID,
+  DEMO_INGRESO_REASON,
+  DEMO_INGRESO_SERVICE,
+} from '@/modules/admission/types'
 
 export interface BedWithDetails extends Bed {
   patient?: Patient
@@ -27,21 +35,49 @@ export interface AdmissionWithDetails extends AdmissionRecord {
   bed: Bed
 }
 
+export interface AddAdmissionNoteInput {
+  authorRole: AdmissionNoteAuthorRole
+  text: string
+  vitals?: BedVitals
+}
+
 const beds: Bed[] = bedsSeed.map((item) => ({
   ...item,
   status: item.status as BedStatus,
 }))
 
 const admissions: AdmissionRecord[] = []
+const admissionNotes: AdmissionNote[] = []
 
-const DEMO_BED_ID = '204-B'
-const DEMO_PATIENT_ID = 'pat-002'
+const DEMO_BED_ID = DEMO_INGRESO_BED_ID
+const DEMO_PATIENT_ID = DEMO_INGRESO_PATIENT_ID
 
 /** ENTREGA: TA 128/78, FC 88, SpO2 94% */
 const DEMO_VITALS: BedVitals = {
   bloodPressure: '128/78',
   heartRate: 88,
   oxygenSaturation: 94,
+}
+
+/** ENTREGA P-FE-S0-008 — nota seed médica (texto oficial). */
+export const DEMO_MEDICAL_NOTE_TEXT =
+  'Paciente estable, continúa antibiótico IV; plan alta probable 48h'
+
+function seedDemoMedicalNote(admissionId: string): void {
+  if (
+    admissionNotes.some(
+      (note) => note.admissionId === admissionId && note.authorRole === 'Medico',
+    )
+  ) {
+    return
+  }
+  admissionNotes.push({
+    id: 'note-seed-med-001',
+    admissionId,
+    authorRole: 'Medico',
+    text: DEMO_MEDICAL_NOTE_TEXT,
+    recordedAt: guayaquilIsoNow(),
+  })
 }
 
 function delay(ms = 180): Promise<void> {
@@ -160,6 +196,7 @@ export async function createAdmission(
   bed.admissionId = admission.id
   if (bed.id === DEMO_BED_ID && input.patientId === DEMO_PATIENT_ID) {
     bed.vitals = { ...DEMO_VITALS }
+    seedDemoMedicalNote(admission.id)
   }
 
   return ok({
@@ -192,6 +229,141 @@ export async function getAdmissionById(
       code: 'NOT_FOUND',
       message: `Cama ${admission.bedId} no encontrada`,
     })
+  }
+
+  return ok({
+    ...admission,
+    patient: patientResult.data,
+    bed: { ...bed },
+  })
+}
+
+/**
+ * Garantiza adm-001 + 204-B ocupada + vitals + nota seed para rutas 008
+ * si el guion no pasó antes por ingreso en esta sesión.
+ */
+export async function ensureDemoAdmission(): Promise<ApiResult<AdmissionWithDetails>> {
+  const existing = admissions.find((item) => item.id === DEMO_ADMISSION_ID)
+  if (existing) {
+    seedDemoMedicalNote(existing.id)
+    return getAdmissionById(existing.id)
+  }
+
+  return createAdmission({
+    patientId: DEMO_PATIENT_ID,
+    bedId: DEMO_BED_ID,
+    reason: DEMO_INGRESO_REASON,
+    service: DEMO_INGRESO_SERVICE,
+  })
+}
+
+export async function getAdmissionNotes(
+  admissionId: string,
+): Promise<ApiResult<AdmissionNote[]>> {
+  await delay()
+  const admission = admissions.find((item) => item.id === admissionId)
+  if (!admission) {
+    return fail({
+      code: 'NOT_FOUND',
+      message: `Ingreso ${admissionId} no encontrado`,
+    })
+  }
+
+  const notes = admissionNotes
+    .filter((note) => note.admissionId === admissionId)
+    .map((note) => ({ ...note, vitals: note.vitals ? { ...note.vitals } : undefined }))
+    .sort((a, b) => a.recordedAt.localeCompare(b.recordedAt))
+
+  return ok(notes)
+}
+
+export async function addAdmissionNote(
+  admissionId: string,
+  input: AddAdmissionNoteInput,
+): Promise<ApiResult<AdmissionNote>> {
+  await delay(100)
+
+  const admission = admissions.find((item) => item.id === admissionId)
+  if (!admission) {
+    return fail({
+      code: 'NOT_FOUND',
+      message: `Ingreso ${admissionId} no encontrado`,
+    })
+  }
+
+  if (admission.status !== 'Activo') {
+    return fail({
+      code: 'NOT_ACTIVE',
+      message: `El ingreso ${admissionId} no está activo.`,
+    })
+  }
+
+  const text = input.text.trim()
+  if (!text) {
+    return fail({
+      code: 'VALIDATION',
+      message: 'La nota no puede estar vacía.',
+    })
+  }
+
+  const note: AdmissionNote = {
+    id: generateId('note'),
+    admissionId,
+    authorRole: input.authorRole,
+    text,
+    recordedAt: guayaquilIsoNow(),
+    vitals: input.vitals ? { ...input.vitals } : undefined,
+  }
+
+  admissionNotes.push(note)
+
+  if (input.vitals) {
+    const bed = findBed(admission.bedId)
+    if (bed) {
+      bed.vitals = { ...input.vitals }
+    }
+  }
+
+  return ok({ ...note, vitals: note.vitals ? { ...note.vitals } : undefined })
+}
+
+export async function dischargeAdmission(
+  admissionId: string,
+): Promise<ApiResult<AdmissionWithDetails>> {
+  await delay(120)
+
+  const admission = admissions.find((item) => item.id === admissionId)
+  if (!admission) {
+    return fail({
+      code: 'NOT_FOUND',
+      message: `Ingreso ${admissionId} no encontrado`,
+    })
+  }
+
+  if (admission.status !== 'Activo') {
+    return fail({
+      code: 'NOT_ACTIVE',
+      message: `El ingreso ${admissionId} ya no está activo.`,
+    })
+  }
+
+  const bed = findBed(admission.bedId)
+  if (!bed) {
+    return fail({
+      code: 'NOT_FOUND',
+      message: `Cama ${admission.bedId} no encontrada`,
+    })
+  }
+
+  admission.status = 'Alta'
+  bed.status = 'Limpieza'
+  delete bed.patientId
+  delete bed.admissionId
+  delete bed.vitals
+
+  const patientResult = await getPatientById(admission.patientId)
+  if (!patientResult.ok) {
+    return fail(patientResult.error)
   }
 
   return ok({

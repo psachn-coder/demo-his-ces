@@ -27,11 +27,17 @@ export {
   type InvoiceWithPatient,
 } from '@/lib/api/billing'
 export {
+  addAdmissionNote,
   createAdmission,
+  dischargeAdmission,
+  ensureDemoAdmission,
   getAdmissionById,
+  getAdmissionNotes,
   getBeds,
   getLibreBeds,
+  type AddAdmissionNoteInput,
   type AdmissionWithDetails,
   type BedWithDetails,
   type CreateAdmissionInput,
+  DEMO_MEDICAL_NOTE_TEXT,
 } from '@/lib/api/admissions'

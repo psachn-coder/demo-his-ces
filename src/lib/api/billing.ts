@@ -8,7 +8,8 @@ export interface InvoiceWithPatient extends Invoice {
 }
 
 export interface GetInvoiceParams {
-  encounterId: string
+  encounterId?: string
+  admissionId?: string
 }
 
 const invoices: Invoice[] = invoicesSeed.map((item) => ({
@@ -22,6 +23,10 @@ function delay(ms = 200): Promise<void> {
 
 function findInvoiceByEncounter(encounterId: string): Invoice | undefined {
   return invoices.find((invoice) => invoice.encounterId === encounterId)
+}
+
+function findInvoiceByAdmission(admissionId: string): Invoice | undefined {
+  return invoices.find((invoice) => invoice.admissionId === admissionId)
 }
 
 function findInvoiceById(id: string): Invoice | undefined {
@@ -42,15 +47,33 @@ async function enrichInvoice(invoice: Invoice): Promise<ApiResult<InvoiceWithPat
 
 export async function getInvoice(params: GetInvoiceParams): Promise<ApiResult<InvoiceWithPatient>> {
   await delay()
-  const invoice = findInvoiceByEncounter(params.encounterId)
-  if (!invoice) {
-    return fail({
-      code: 'NOT_FOUND',
-      message: `Factura para encuentro ${params.encounterId} no encontrada`,
-    })
+
+  if (params.admissionId) {
+    const invoice = findInvoiceByAdmission(params.admissionId)
+    if (!invoice) {
+      return fail({
+        code: 'NOT_FOUND',
+        message: `Factura para ingreso ${params.admissionId} no encontrada`,
+      })
+    }
+    return enrichInvoice(invoice)
   }
 
-  return enrichInvoice(invoice)
+  if (params.encounterId) {
+    const invoice = findInvoiceByEncounter(params.encounterId)
+    if (!invoice) {
+      return fail({
+        code: 'NOT_FOUND',
+        message: `Factura para encuentro ${params.encounterId} no encontrada`,
+      })
+    }
+    return enrichInvoice(invoice)
+  }
+
+  return fail({
+    code: 'VALIDATION',
+    message: 'Debe indicar encounterId o admissionId.',
+  })
 }
 
 export async function payInvoice(id: string): Promise<ApiResult<InvoiceWithPatient>> {
