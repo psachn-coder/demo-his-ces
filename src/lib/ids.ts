@@ -3,5 +3,5 @@ export function generateId(prefix: string): string {
   return `${prefix}-${suffix}`
 }
 
-export const DEMO_ADMISSION_ID = 'adm-demo-001'
-export const DEMO_ENCOUNTER_ID = 'enc-demo-001'
+export const DEMO_ADMISSION_ID = 'adm-001'
+export const DEMO_ENCOUNTER_ID = 'enc-001'

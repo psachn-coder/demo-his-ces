@@ -31,7 +31,7 @@ export const NAV_ITEMS: NavItem[] = [
   {
     label: 'Alta',
     path: `/app/alta/${DEMO_ADMISSION_ID}`,
-    roles: ['Médico', 'Recepción'],
+    roles: ['Médico', 'Recepción', 'Enfermería'],
   },
   {
     label: 'Camas',
@@ -86,7 +86,7 @@ const ROUTE_PERMISSIONS: { pattern: RegExp; roles: StaffRole[] }[] = [
   { pattern: /^\/app\/enfermeria(?:\/|$)/, roles: ['Enfermería'] },
   { pattern: /^\/app\/farmacia(?:\/|$)/, roles: ['Farmacia'] },
   { pattern: /^\/app\/caja(?:\/|$)/, roles: ['Caja'] },
-  { pattern: /^\/app\/alta(?:\/|$)/, roles: ['Médico', 'Recepción'] },
+  { pattern: /^\/app\/alta(?:\/|$)/, roles: ['Médico', 'Recepción', 'Enfermería'] },
 ]
 
 export function isRouteAllowedForRole(pathname: string, role: StaffRole): boolean {

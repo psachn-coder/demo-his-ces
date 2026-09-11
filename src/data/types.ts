@@ -14,6 +14,9 @@ export interface Patient {
   lastName: string
   documentId: string
   birthDate: string
+  age?: number
+  sector?: string
+  allergy?: string
   phone?: string
   email?: string
 }
@@ -39,7 +42,7 @@ export interface Bed {
   id: string
   ward: string
   number: string
-  status: 'Libre' | 'Ocupada' | 'Mantenimiento'
+  status: 'Libre' | 'Ocupada' | 'Limpieza'
   patientId?: string
 }
 
@@ -70,7 +73,7 @@ export interface Invoice {
   admissionId: string
   patientId: string
   issuedAt: string
-  status: 'Pendiente' | 'Pagada' | 'Anulada'
+  status: 'Borrador' | 'Emitida' | 'Pagada'
   lines: InvoiceLine[]
   total: number
 }

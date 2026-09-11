@@ -1,4 +1,12 @@
-import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 
 import { isRouteAllowedForRole, ROLE_HOME } from '@/app/navigation'
@@ -43,6 +51,12 @@ export function DemoSessionProvider({ children }: { children: ReactNode }) {
     },
     [location.pathname, navigate],
   )
+
+  useEffect(() => {
+    if (!isRouteAllowedForRole(location.pathname, role)) {
+      navigate(ROLE_HOME[role], { replace: true })
+    }
+  }, [location.pathname, role, navigate])
 
   const value = useMemo(() => ({ role, setRole }), [role, setRole])
 
