@@ -1,0 +1,27 @@
+[
+  {
+    "id": "pat-001",
+    "firstName": "María Fernanda",
+    "lastName": "Quishpe",
+    "documentId": "1723456789",
+    "birthDate": "1988-03-15",
+    "phone": "+593 99 123 4567",
+    "email": "maria.quishpe@example.com"
+  },
+  {
+    "id": "pat-002",
+    "firstName": "Carlos Andrés",
+    "lastName": "Mendoza",
+    "documentId": "0912345678",
+    "birthDate": "1975-11-22",
+    "phone": "+593 98 765 4321"
+  },
+  {
+    "id": "pat-003",
+    "firstName": "Lucía",
+    "lastName": "Vega",
+    "documentId": "1756789012",
+    "birthDate": "1992-07-08",
+    "email": "lucia.vega@example.com"
+  }
+]
