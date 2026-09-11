@@ -85,7 +85,7 @@ export function AgendaPage() {
 
     const created = await createAppointment({
       patientId,
-      scheduledAt: `${values.date}T${values.time}:00`,
+      scheduledAt: `${values.date}T${values.time}:00-05:00`,
       status: 'Programada',
       specialty: values.specialty,
       physicianName: values.physicianName,
@@ -119,6 +119,15 @@ export function AgendaPage() {
   }, [error])
 
   const showEmpty = !loading && !error && filteredRows.length === 0
+  const isToday = filters.date === todayIsoDate()
+  const hasActiveFilters =
+    filters.specialty !== 'all' ||
+    filters.physician !== 'all' ||
+    filters.patientSearch.trim() !== ''
+
+  const emptyMessage = isToday && !hasActiveFilters
+    ? 'No hay citas para este día.'
+    : 'No hay citas que coincidan con los filtros seleccionados.'
 
   return (
     <>
@@ -144,7 +153,7 @@ export function AgendaPage() {
           </div>
         ) : showEmpty ? (
           <div className="flex flex-col items-center gap-4 rounded-lg border border-dashed border-border bg-ces-surface px-6 py-12 text-center">
-            <p className="text-sm text-ces-muted">No hay citas para hoy</p>
+            <p className="text-sm text-ces-muted">{emptyMessage}</p>
             <Button type="button" onClick={() => setNewSheetOpen(true)}>
               Nueva cita
             </Button>

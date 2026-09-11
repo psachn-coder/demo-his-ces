@@ -6,6 +6,11 @@ interface BreadcrumbCrumb {
   isLast: boolean
 }
 
+const HCE_BREADCRUMBS: BreadcrumbCrumb[] = [
+  { path: '/app', label: 'App', isLast: false },
+  { path: '/app/medico/hce', label: 'HCE', isLast: true },
+]
+
 const ROUTE_BREADCRUMBS: Record<string, BreadcrumbCrumb[]> = {
   '/app/recepcion/agenda': [
     { path: '/app', label: 'App', isLast: false },
@@ -38,6 +43,11 @@ function labelForSegment(segment: string): string {
 function crumbsFromPath(pathname: string): BreadcrumbCrumb[] {
   if (ROUTE_BREADCRUMBS[pathname]) {
     return ROUTE_BREADCRUMBS[pathname]
+  }
+
+  const normalized = pathname.replace(/\/$/, '') || '/'
+  if (normalized === '/app/medico/hce' || /^\/app\/medico\/hce\/[^/]+$/.test(normalized)) {
+    return HCE_BREADCRUMBS
   }
 
   const segments = pathname.split('/').filter(Boolean)

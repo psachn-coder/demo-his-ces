@@ -1,0 +1,25 @@
+[
+  {
+    "id": "enc-001",
+    "patientId": "pat-001",
+    "appointmentId": "apt-001",
+    "startedAt": "2026-09-11T09:45:00-05:00",
+    "status": "Abierto",
+    "motivo": "Cefalea 3 días",
+    "diagnosisCode": "R51",
+    "vitals": [
+      {
+        "recordedAt": "2026-09-11T09:40:00-05:00",
+        "bloodPressure": "118/76",
+        "heartRate": 78,
+        "temperature": 36.8,
+        "respiratoryRate": 16,
+        "oxygenSaturation": 98,
+        "weightKg": 62,
+        "heightCm": 162
+      }
+    ],
+    "notes": [],
+    "orders": []
+  }
+]
