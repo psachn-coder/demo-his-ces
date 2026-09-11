@@ -1,0 +1,25 @@
+[
+  {
+    "id": "inv-001",
+    "encounterId": "enc-001",
+    "patientId": "pat-001",
+    "issuedAt": "2026-09-11T10:30:00-05:00",
+    "status": "Emitida",
+    "lines": [
+      {
+        "id": "line-001",
+        "description": "Consulta ambulatoria",
+        "quantity": 1,
+        "unitPrice": 25
+      },
+      {
+        "id": "line-002",
+        "description": "Paracetamol 500 mg x20",
+        "quantity": 1,
+        "unitPrice": 4.5,
+        "prescriptionId": "rx-001"
+      }
+    ],
+    "total": 29.5
+  }
+]

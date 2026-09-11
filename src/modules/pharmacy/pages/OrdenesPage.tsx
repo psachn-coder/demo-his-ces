@@ -25,7 +25,7 @@ export function OrdenesPage() {
   }, [loading, dispenses, selectedId])
 
   const handleFulfillRequest = () => {
-    if (!selectedDispense || selectedDispense.status === 'delivered') return
+    if (!selectedDispense || selectedDispense.status === 'Entregado') return
     setDialogOpen(true)
   }
 

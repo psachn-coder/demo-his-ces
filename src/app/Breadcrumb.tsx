@@ -11,6 +11,11 @@ const HCE_BREADCRUMBS: BreadcrumbCrumb[] = [
   { path: '/app/medico/hce', label: 'HCE', isLast: true },
 ]
 
+const COBRO_BREADCRUMBS: BreadcrumbCrumb[] = [
+  { path: '/app', label: 'App', isLast: false },
+  { path: '/app/caja/cobro', label: 'Cobro', isLast: true },
+]
+
 const ROUTE_BREADCRUMBS: Record<string, BreadcrumbCrumb[]> = {
   '/app/recepcion/agenda': [
     { path: '/app', label: 'App', isLast: false },
@@ -52,6 +57,10 @@ function crumbsFromPath(pathname: string): BreadcrumbCrumb[] {
   const normalized = pathname.replace(/\/$/, '') || '/'
   if (normalized === '/app/medico/hce' || /^\/app\/medico\/hce\/[^/]+$/.test(normalized)) {
     return HCE_BREADCRUMBS
+  }
+
+  if (normalized === '/app/caja/cobro' || /^\/app\/caja\/cobro\/[^/]+$/.test(normalized)) {
+    return COBRO_BREADCRUMBS
   }
 
   const segments = pathname.split('/').filter(Boolean)

@@ -20,3 +20,9 @@ export {
   getMedications,
   type GetDispensesParams,
 } from '@/lib/api/pharmacy'
+export {
+  getInvoice,
+  payInvoice,
+  type GetInvoiceParams,
+  type InvoiceWithPatient,
+} from '@/lib/api/billing'
