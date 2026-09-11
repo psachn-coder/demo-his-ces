@@ -26,3 +26,12 @@ export {
   type GetInvoiceParams,
   type InvoiceWithPatient,
 } from '@/lib/api/billing'
+export {
+  createAdmission,
+  getAdmissionById,
+  getBeds,
+  getLibreBeds,
+  type AdmissionWithDetails,
+  type BedWithDetails,
+  type CreateAdmissionInput,
+} from '@/lib/api/admissions'

@@ -84,12 +84,32 @@ export interface EncounterWithPatient extends EncounterDetail {
   patient: Patient
 }
 
+export type BedStatus = 'Libre' | 'Ocupada' | 'Limpieza'
+
+export interface BedVitals {
+  bloodPressure: string
+  heartRate: number
+  oxygenSaturation: number
+}
+
 export interface Bed {
   id: string
   ward: string
   number: string
-  status: 'Libre' | 'Ocupada' | 'Limpieza'
+  status: BedStatus
   patientId?: string
+  admissionId?: string
+  vitals?: BedVitals
+}
+
+export interface AdmissionRecord {
+  id: string
+  patientId: string
+  bedId: string
+  reason: string
+  service: string
+  admittedAt: string
+  status: 'Activo' | 'Alta' | 'Cancelado'
 }
 
 export interface Medication {
