@@ -83,14 +83,14 @@ export async function fulfillDispense(id: string): Promise<ApiResult<DispenseWit
     })
   }
 
-  if (dispense.status === 'delivered') {
+  if (dispense.status === 'Entregado') {
     return fail({
       code: 'ALREADY_FULFILLED',
       message: 'Esta dispensa ya fue entregada.',
     })
   }
 
-  dispense.status = 'delivered'
+  dispense.status = 'Entregado'
   dispense.dispensedAt = guayaquilIsoNow()
 
   return enrichDispense(dispense)

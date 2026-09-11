@@ -1,20 +1,6 @@
 import { Badge } from '@/components/ui/badge'
 import type { Patient } from '@/data/types'
-import { formatAge } from '@/lib/formatters'
-
-function resolveAge(patient: Patient): number {
-  if (patient.age !== undefined) {
-    return patient.age
-  }
-  const birth = new Date(patient.birthDate)
-  const today = new Date()
-  let age = today.getFullYear() - birth.getFullYear()
-  const monthDiff = today.getMonth() - birth.getMonth()
-  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
-    age -= 1
-  }
-  return age
-}
+import { formatAge, resolveAge } from '@/lib/formatters'
 
 interface HcePatientHeaderProps {
   patient: Patient

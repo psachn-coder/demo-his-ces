@@ -4,24 +4,10 @@ import { useDemoSession } from '@/app/DemoSessionProvider'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
-import type { DispenseWithDetails, Patient } from '@/data/types'
-import { formatAge, formatPatientName } from '@/lib/formatters'
+import type { DispenseWithDetails } from '@/data/types'
+import { formatAge, formatPatientName, resolveAge } from '@/lib/formatters'
 import { DispenseStatusBadge } from '@/modules/pharmacy/components/DispenseStatusBadge'
 import { formatDispenseLabel } from '@/modules/pharmacy/utils'
-
-function resolveAge(patient: Patient): number {
-  if (patient.age !== undefined) {
-    return patient.age
-  }
-  const birth = new Date(patient.birthDate)
-  const today = new Date()
-  let age = today.getFullYear() - birth.getFullYear()
-  const monthDiff = today.getMonth() - birth.getMonth()
-  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
-    age -= 1
-  }
-  return age
-}
 
 interface DispenseDetailProps {
   dispense: DispenseWithDetails | null
@@ -61,7 +47,7 @@ export function DispenseDetail({ dispense, loading, fulfilling, onFulfill }: Dis
 
   const patientName = formatPatientName(dispense.patient.firstName, dispense.patient.lastName)
   const age = resolveAge(dispense.patient)
-  const isDelivered = dispense.status === 'delivered'
+  const isDelivered = dispense.status === 'Entregado'
 
   return (
     <div className="rounded-lg border border-border bg-ces-surface">
