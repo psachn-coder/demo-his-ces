@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 import { Button } from '@/components/ui/button'
 import {
   Sheet,
@@ -31,7 +33,7 @@ export function BedDetailSheet({ bed, open, onOpenChange }: BedDetailSheetProps)
                 <BedStatusBadge status={bed.status} />
               </SheetTitle>
               <SheetDescription>
-                {bed.ward} · resumen de ocupación (evolución completa en S0-008).
+                {bed.ward} · resumen de ocupación.
               </SheetDescription>
             </SheetHeader>
 
@@ -83,12 +85,11 @@ export function BedDetailSheet({ bed, open, onOpenChange }: BedDetailSheetProps)
             </div>
 
             <SheetFooter className="mt-8 flex-col items-stretch gap-2 sm:flex-col">
-              {occupied ? (
-                <Button type="button" disabled title="Próximo: S0-008">
-                  Abrir evolución
+              {occupied && bed.admissionId ? (
+                <Button asChild type="button">
+                  <Link to={`/app/enfermeria/evolucion/${bed.admissionId}`}>Abrir evolución</Link>
                 </Button>
               ) : null}
-              <p className="text-xs text-ces-muted">Próximo: S0-008</p>
             </SheetFooter>
           </>
         ) : null}

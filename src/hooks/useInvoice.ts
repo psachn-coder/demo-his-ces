@@ -3,7 +3,20 @@ import { useCallback, useEffect, useState } from 'react'
 import type { InvoiceWithPatient } from '@/lib/api/billing'
 import { getInvoice, payInvoice } from '@/lib/api/billing'
 
-export function useInvoice(encounterId: string) {
+interface UseInvoiceOptions {
+  encounterId?: string
+  admissionId?: string
+}
+
+export function useInvoice(encounterIdOrOptions: string | UseInvoiceOptions) {
+  const options: UseInvoiceOptions =
+    typeof encounterIdOrOptions === 'string'
+      ? { encounterId: encounterIdOrOptions }
+      : encounterIdOrOptions
+
+  const encounterId = options.encounterId
+  const admissionId = options.admissionId
+
   const [invoice, setInvoice] = useState<InvoiceWithPatient | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -12,7 +25,7 @@ export function useInvoice(encounterId: string) {
   const load = useCallback(async () => {
     setLoading(true)
     setError(null)
-    const result = await getInvoice({ encounterId })
+    const result = await getInvoice({ encounterId, admissionId })
     if (result.ok) {
       setInvoice(result.data)
     } else {
@@ -20,7 +33,7 @@ export function useInvoice(encounterId: string) {
       setInvoice(null)
     }
     setLoading(false)
-  }, [encounterId])
+  }, [encounterId, admissionId])
 
   useEffect(() => {
     let cancelled = false
@@ -28,7 +41,7 @@ export function useInvoice(encounterId: string) {
     async function fetchInvoice() {
       setLoading(true)
       setError(null)
-      const result = await getInvoice({ encounterId })
+      const result = await getInvoice({ encounterId, admissionId })
       if (cancelled) return
 
       if (result.ok) {
@@ -44,7 +57,7 @@ export function useInvoice(encounterId: string) {
     return () => {
       cancelled = true
     }
-  }, [encounterId])
+  }, [encounterId, admissionId])
 
   const pay = useCallback(async (): Promise<InvoiceWithPatient | null> => {
     if (!invoice) return null

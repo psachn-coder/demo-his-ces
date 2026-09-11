@@ -21,5 +21,33 @@
       }
     ],
     "total": 29.5
+  },
+  {
+    "id": "inv-002",
+    "admissionId": "adm-001",
+    "patientId": "pat-002",
+    "issuedAt": "2026-09-11T14:00:00-05:00",
+    "status": "Emitida",
+    "lines": [
+      {
+        "id": "line-i01",
+        "description": "Días de cama (Medicina)",
+        "quantity": 3,
+        "unitPrice": 100
+      },
+      {
+        "id": "line-i02",
+        "description": "Farmacia / medicamentos IV",
+        "quantity": 1,
+        "unitPrice": 60
+      },
+      {
+        "id": "line-i03",
+        "description": "Honorarios médicos",
+        "quantity": 1,
+        "unitPrice": 50
+      }
+    ],
+    "total": 410
   }
 ]

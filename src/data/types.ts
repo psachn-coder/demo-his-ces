@@ -112,6 +112,18 @@ export interface AdmissionRecord {
   status: 'Activo' | 'Alta' | 'Cancelado'
 }
 
+/** ENTREGA P-FE-S0-008 — roles de nota sin tilde (contrato puerto). */
+export type AdmissionNoteAuthorRole = 'Medico' | 'Enfermeria'
+
+export interface AdmissionNote {
+  id: string
+  admissionId: string
+  authorRole: AdmissionNoteAuthorRole
+  text: string
+  recordedAt: string
+  vitals?: BedVitals
+}
+
 export interface Medication {
   id: string
   name: string
