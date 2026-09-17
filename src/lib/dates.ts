@@ -31,6 +31,7 @@ export function formatDate(value: string | Date): string {
 export function formatDateTime(value: string | Date): string {
   const date = typeof value === 'string' ? new Date(value) : value
   return new Intl.DateTimeFormat(LOCALE, {
+    timeZone: TIME_ZONE,
     day: '2-digit',
     month: '2-digit',
     year: 'numeric',
@@ -43,6 +44,7 @@ export function formatDateTime(value: string | Date): string {
 export function formatTime(value: string | Date): string {
   const date = typeof value === 'string' ? new Date(value) : value
   return new Intl.DateTimeFormat(LOCALE, {
+    timeZone: TIME_ZONE,
     hour: '2-digit',
     minute: '2-digit',
     hour12: false,
