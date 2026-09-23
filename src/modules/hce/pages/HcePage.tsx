@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 
+import { ConfidentialBadge } from '@/components/shared/ConfidentialBadge'
 import { PageHeader } from '@/components/shared/PageHeader'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -108,6 +109,7 @@ export function HcePage() {
     <>
       <PageHeader
         title={fullName}
+        titleAddon={<ConfidentialBadge variant="legend" />}
         description="Consulta ambulatoria — historia clínica electrónica."
         actions={<HcePatientHeader patient={encounter.patient} />}
       />

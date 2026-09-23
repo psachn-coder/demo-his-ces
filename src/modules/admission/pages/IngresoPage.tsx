@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
+import { ConfidentialBadge } from '@/components/shared/ConfidentialBadge'
 import { PageHeader } from '@/components/shared/PageHeader'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -85,6 +86,7 @@ export function IngresoPage() {
     <>
       <PageHeader
         title="Ingreso hospitalario"
+        titleAddon={<ConfidentialBadge variant="legend" />}
         description="Admisión a cama · demo pat-002 / adm-001 / 204-B."
       />
 
