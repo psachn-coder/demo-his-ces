@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 
 import { useDemoSession } from '@/app/DemoSessionProvider'
+import { ConfidentialBadge } from '@/components/shared/ConfidentialBadge'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -52,8 +53,11 @@ export function DispenseDetail({ dispense, loading, fulfilling, onFulfill }: Dis
   return (
     <div className="rounded-lg border border-border bg-ces-surface">
       <div className="flex flex-wrap items-start justify-between gap-3 border-b border-border px-6 py-4">
-        <div>
-          <h2 className="text-lg font-semibold text-ces-text">{formatDispenseLabel(dispense)}</h2>
+        <div className="space-y-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <h2 className="text-lg font-semibold text-ces-text">{formatDispenseLabel(dispense)}</h2>
+            <ConfidentialBadge variant="short" size="sm" />
+          </div>
           <p className="text-sm text-ces-muted">Receta · {dispense.medication.form}</p>
         </div>
         <DispenseStatusBadge status={dispense.status} />

@@ -1,3 +1,4 @@
+import { ConfidentialBadge } from '@/components/shared/ConfidentialBadge'
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
@@ -14,6 +15,14 @@ import { formatCurrency } from '@/lib/formatters'
 interface InvoiceLinesTableProps {
   lines: InvoiceLine[] | undefined
   loading: boolean
+}
+
+function invoiceHasClinicalDetail(lines: InvoiceLine[]): boolean {
+  return lines.some(
+    (line) =>
+      line.prescriptionId != null ||
+      /medicamento|farmacia|paracetamol|diagnóstico|nota clínica/i.test(line.description),
+  )
 }
 
 export function InvoiceLinesTable({ lines, loading }: InvoiceLinesTableProps) {
@@ -39,7 +48,12 @@ export function InvoiceLinesTable({ lines, loading }: InvoiceLinesTableProps) {
   return (
     <div className="rounded-lg border border-border bg-ces-surface">
       <div className="border-b border-border px-6 py-4">
-        <h2 className="text-sm font-semibold text-ces-text">Ítems facturables</h2>
+        <div className="flex flex-wrap items-center gap-2">
+          <h2 className="text-sm font-semibold text-ces-text">Ítems facturables</h2>
+          {invoiceHasClinicalDetail(lines) ? (
+            <ConfidentialBadge variant="short" size="sm" />
+          ) : null}
+        </div>
         <p className="text-xs text-ces-muted">{lines.length} línea(s)</p>
       </div>
       <Table>

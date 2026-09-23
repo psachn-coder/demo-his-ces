@@ -1,3 +1,4 @@
+import { ConfidentialBadge } from '@/components/shared/ConfidentialBadge'
 import { PatientCard } from '@/components/shared/PatientCard'
 import {
   Sheet,
@@ -30,7 +31,12 @@ export function PatientDetailSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="right" className="w-full sm:max-w-md">
         <SheetHeader>
-          <SheetTitle>Ficha del paciente</SheetTitle>
+          <div className="flex flex-wrap items-center gap-2 pr-8">
+            <SheetTitle>Ficha del paciente</SheetTitle>
+            {patient && !loading ? (
+              <ConfidentialBadge variant="short" size="sm" />
+            ) : null}
+          </div>
           <SheetDescription>
             {patient ? fullName : 'Cargando información del paciente…'}
           </SheetDescription>
