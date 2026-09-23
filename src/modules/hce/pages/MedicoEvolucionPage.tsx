@@ -1,5 +1,6 @@
 import { Navigate, useParams } from 'react-router-dom'
 
+import { ConfidentialBadge } from '@/components/shared/ConfidentialBadge'
 import { PageHeader } from '@/components/shared/PageHeader'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -80,6 +81,7 @@ export function MedicoEvolucionPage() {
     <>
       <PageHeader
         title="Evolución médica"
+        titleAddon={<ConfidentialBadge variant="legend" />}
         description={`${patientName} · ${patientAge} · ${admission.patient.sector ?? '—'} · ${admission.bedId}`}
       />
 

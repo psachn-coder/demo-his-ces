@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 
+import { ConfidentialBadge } from '@/components/shared/ConfidentialBadge'
 import { Button } from '@/components/ui/button'
 import {
   Sheet,
@@ -28,9 +29,10 @@ export function BedDetailSheet({ bed, open, onOpenChange }: BedDetailSheetProps)
         {bed ? (
           <>
             <SheetHeader>
-              <SheetTitle className="flex items-center gap-2">
+              <SheetTitle className="flex flex-wrap items-center gap-2">
                 Cama {bed.id}
                 <BedStatusBadge status={bed.status} />
+                {occupied ? <ConfidentialBadge variant="short" size="sm" /> : null}
               </SheetTitle>
               <SheetDescription>
                 {bed.ward} · resumen de ocupación.
